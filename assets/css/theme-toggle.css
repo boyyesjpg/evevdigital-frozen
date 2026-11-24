@@ -1,204 +1,613 @@
 /* =====================================================================
-   EvEvDigital Dual Theme Engine (Dark & Light Mode) - Sektor 07 Frozen Food
+   EvEvDigital Dual Theme Engine (Dark & Light Mode) — WCAG AAA (> 7:1)
+   Sektor 07: Toko Frozen Food & Grosir Makanan Beku Halal (evevfrozen)
    ===================================================================== */
 
 :root {
-  --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  --theme-transition: background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+  --evev-bg-primary: #ffffff;
+  --evev-bg-secondary: #f8fafc;
+  --evev-bg-card: #ffffff;
+  --evev-bg-elevated: #f1f5f9;
+  --evev-text-main: #0f172a;       /* 17.85:1 on #ffffff */
+  --evev-text-muted: #334155;      /* 10.35:1 on #ffffff, 9.90:1 on #f8fafc */
+  --evev-border: #cbd5e1;
+  --evev-accent: #991b1b;          /* 8.31:1 on #ffffff */
+  --evev-accent-hover: #7f1d1d;    /* 10.67:1 on #ffffff */
+  --evev-wa-bg: #166534;           /* 7.13:1 with #ffffff text */
+  --evev-wa-bg-hover: #14532d;     /* 9.11:1 with #ffffff text */
+  --evev-wa-text: #14532d;         /* 9.11:1 on #ffffff */
+  --evev-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+  color-scheme: light;
 }
 
-/* Light Mode (Default) */
-[data-theme="light"], body:not([data-theme="dark"]) {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f0fdf4;
-  --bg-card: #ffffff;
-  --text-main: #1e293b;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
-}
-
-/* Dark Mode Overrides */
+/* Dark Mode Palette — High Contrast (> 7:1) */
 [data-theme="dark"] {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-card: #1e293b;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --border-color: #334155;
+  --evev-bg-primary: #0b1120;
+  --evev-bg-secondary: #111827;
+  --evev-bg-card: #162032;
+  --evev-bg-elevated: #1e293b;
+  --evev-text-main: #f8fafc;       /* 18.00:1 on #0b1120, 15.60:1 on #162032 */
+  --evev-text-muted: #cbd5e1;      /* 12.60:1 on #0b1120, 10.99:1 on #162032 */
+  --evev-border: #334155;
+  --evev-accent: #fda4af;          /* 8.63:1 on #162032 */
+  --evev-accent-hover: #fecdd3;
+  --evev-wa-bg: #166534;           /* 7.13:1 with #ffffff text */
+  --evev-wa-bg-hover: #14532d;
+  --evev-wa-text: #86efac;         /* 11.62:1 on #162032 */
+  --evev-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
 }
 
-[data-theme="dark"] body {
-  background-color: #0f172a !important;
-  color: #f8fafc !important;
+/* Anti-FOUC: matikan transisi saat initial paint sebelum JS selesai hidrasi */
+html.theme-preload *,
+html.theme-preload *::before,
+html.theme-preload *::after {
+  transition: none !important;
 }
 
-[data-theme="dark"] .page-wrapper,
+html,
+body,
+.page-wrapper,
+.main-header,
+.sticky-header,
+section,
+.pricing-card,
+.evev-price-card,
+.evev-paket-card,
+.product__item,
+.testimonial-card,
+.blog-card,
+.team-two__item,
+.faq-two__accordion .accordion {
+  transition: var(--theme-transition);
+}
+
+/* =====================================================================
+   LIGHT MODE HIGH-CONTRAST BASE OVERRIDES
+   ===================================================================== */
+[data-theme="light"] body {
+  background-color: var(--evev-bg-primary);
+  color: var(--evev-text-main);
+}
+
+[data-theme="light"] p,
+[data-theme="light"] .about-one__text,
+[data-theme="light"] .about-two__text,
+[data-theme="light"] .about-three__text,
+[data-theme="light"] .faq-two__info__text,
+[data-theme="light"] .testimonial-card__text,
+[data-theme="light"] .testimonials-two__content__text,
+[data-theme="light"] .pricing-card__package {
+  color: var(--evev-text-muted);
+}
+
+[data-theme="light"] .sec-title__title,
+[data-theme="light"] .product__item__title a,
+[data-theme="light"] .pricing-card__title a,
+[data-theme="light"] .blog-card__title a,
+[data-theme="light"] .team-two__name a,
+[data-theme="light"] .faq-two__accordion .accordion-title h4 {
+  color: var(--evev-text-main);
+}
+
+[data-theme="light"] .sec-title__tagline,
+[data-theme="light"] .product__item__price,
+[data-theme="light"] .pricing-card__price {
+  color: var(--evev-accent);
+}
+
+/* =====================================================================
+   DARK MODE FULL COVERAGE (TEMPLATE 1, 2 & 3)
+   ===================================================================== */
+[data-theme="dark"] html,
+[data-theme="dark"] body,
+[data-theme="dark"] .page-wrapper {
+  background-color: var(--evev-bg-primary) !important;
+  color: var(--evev-text-main) !important;
+}
+
 [data-theme="dark"] .main-header,
-[data-theme="dark"] .header-top,
+[data-theme="dark"] .main-header--one,
+[data-theme="dark"] .main-header--two,
+[data-theme="dark"] .main-header--three,
 [data-theme="dark"] .sticky-header,
-[data-theme="dark"] .banner-section,
-[data-theme="dark"] .services-section,
-[data-theme="dark"] .about-section,
-[data-theme="dark"] .products-section,
-[data-theme="dark"] .pricing-section,
-[data-theme="dark"] .testimonials-section {
-  background-color: #0f172a !important;
-  color: #f8fafc !important;
+[data-theme="dark"] .sticky-header--cloned,
+[data-theme="dark"] .topbar,
+[data-theme="dark"] .topbar--two,
+[data-theme="dark"] .topbar--three {
+  background-color: #0b1120 !important;
+  border-bottom: 1px solid #1e293b !important;
 }
 
+[data-theme="dark"] .meat-list,
+[data-theme="dark"] .meat-list-two,
+[data-theme="dark"] .meat-list-two__wrapper,
+[data-theme="dark"] .about-one,
+[data-theme="dark"] .about-two,
+[data-theme="dark"] .about-three,
+[data-theme="dark"] .product-one,
+[data-theme="dark"] .product-two,
+[data-theme="dark"] .pricing-one,
+[data-theme="dark"] .why-choose-one,
+[data-theme="dark"] .testimonials-one,
+[data-theme="dark"] .testimonials-two,
+[data-theme="dark"] .testimonials-three,
+[data-theme="dark"] .faq-two,
+[data-theme="dark"] .team-two,
+[data-theme="dark"] .blog-one,
+[data-theme="dark"] .blog-two,
+[data-theme="dark"] .blog-three,
+[data-theme="dark"] .client-carousel,
+[data-theme="dark"] .delivery-one,
+[data-theme="dark"] .evev-paket-section {
+  background-color: var(--evev-bg-primary) !important;
+  background-image: none !important;
+  color: var(--evev-text-main) !important;
+}
+
+[data-theme="dark"] .evev-paket-section,
+[data-theme="dark"] .product-two,
+[data-theme="dark"] .faq-two {
+  background-color: var(--evev-bg-secondary) !important;
+}
+
+/* Cards & Elevated Surfaces in Dark Mode */
 [data-theme="dark"] .card,
-[data-theme="dark"] .product-card,
-[data-theme="dark"] .service-card,
-[data-theme="dark"] .inner-box {
-  background-color: #1e293b !important;
-  color: #f8fafc !important;
-  border-color: #334155 !important;
+[data-theme="dark"] .product__item,
+[data-theme="dark"] .pricing-card,
+[data-theme="dark"] .evev-price-card,
+[data-theme="dark"] .evev-paket-card,
+[data-theme="dark"] .testimonial-card,
+[data-theme="dark"] .testimonials-two__content,
+[data-theme="dark"] .testimonials-three__card,
+[data-theme="dark"] .blog-card,
+[data-theme="dark"] .team-two__item,
+[data-theme="dark"] .faq-two__accordion .accordion,
+[data-theme="dark"] .faq-two__accordion .accordion-title,
+[data-theme="dark"] .faq-two__accordion .accordion-content,
+[data-theme="dark"] .meat-list__item,
+[data-theme="dark"] .about-two__info,
+[data-theme="dark"] .main-menu__list ul {
+  background-color: var(--evev-bg-card) !important;
+  color: var(--evev-text-main) !important;
+  border-color: var(--evev-border) !important;
+  box-shadow: var(--evev-shadow) !important;
 }
 
-[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3,
-[data-theme="dark"] h4, [data-theme="dark"] h5, [data-theme="dark"] h6,
-[data-theme="dark"] .main-menu .navigation > li > a {
-  color: #f8fafc !important;
+[data-theme="dark"] .faq-two__accordion .accordion-content .inner__bg,
+[data-theme="dark"] .testimonial-card__bg {
+  opacity: 0.08 !important;
+}
+
+/* Typography in Dark Mode (> 7:1 contrast) */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+[data-theme="dark"] .sec-title__title,
+[data-theme="dark"] .main-menu__list > li > a,
+[data-theme="dark"] .main-menu__list ul li a,
+[data-theme="dark"] .topbar__info a,
+[data-theme="dark"] .topbar__info span,
+[data-theme="dark"] .topbar__pages a,
+[data-theme="dark"] .main-header__call__number,
+[data-theme="dark"] .product__item__title a,
+[data-theme="dark"] .pricing-card__title a,
+[data-theme="dark"] .blog-card__title a,
+[data-theme="dark"] .team-two__name a,
+[data-theme="dark"] .testimonial-card__name,
+[data-theme="dark"] .testimonials-two__name,
+[data-theme="dark"] .faq-two__accordion .accordion-title h4,
+[data-theme="dark"] .meat-list__title,
+[data-theme="dark"] .about-two__info__title,
+[data-theme="dark"] .evev-paket-card__title {
+  color: var(--evev-text-main) !important;
 }
 
 [data-theme="dark"] p,
-[data-theme="dark"] .text,
-[data-theme="dark"] span:not(.theme-toggle-btn):not(.btn):not(.badge):not(.footer-maker):not(.footer-maker *) {
-  color: #cbd5e1 !important;
+[data-theme="dark"] .about-one__text,
+[data-theme="dark"] .about-two__text,
+[data-theme="dark"] .about-two__list li,
+[data-theme="dark"] .about-one__info li,
+[data-theme="dark"] .pricing-card__package,
+[data-theme="dark"] .pricing-card__weight,
+[data-theme="dark"] .testimonial-card__text,
+[data-theme="dark"] .testimonial-card__designation,
+[data-theme="dark"] .testimonials-two__content__text,
+[data-theme="dark"] .testimonials-two__designation,
+[data-theme="dark"] .team-two__designation,
+[data-theme="dark"] .faq-two__info__text,
+[data-theme="dark"] .faq-two__accordion .inner p,
+[data-theme="dark"] .blog-card__meta a,
+[data-theme="dark"] .blog-card__link,
+[data-theme="dark"] .evev-paket-card__desc,
+[data-theme="dark"] .evev-paket-card__pack,
+[data-theme="dark"] .evev-paket-card__price-label,
+[data-theme="dark"] .main-header__call__tagline {
+  color: var(--evev-text-muted) !important;
 }
 
-/* Theme Toggle Button */
+[data-theme="dark"] .sec-title__tagline,
+[data-theme="dark"] .product__item__price,
+[data-theme="dark"] .pricing-card__price,
+[data-theme="dark"] .evev-price-card .pricing-card__price,
+[data-theme="dark"] .evev-paket-card__price {
+  color: var(--evev-accent) !important;
+}
+
+[data-theme="dark"] .evev-mini-wa {
+  color: var(--evev-wa-text) !important;
+}
+
+/* Tab Buttons in Dark Mode */
+[data-theme="dark"] .pricing-one .tab-buttons .tab-btn,
+[data-theme="dark"] .technologies-one .tab-buttons .tab-btn {
+  background-color: var(--evev-bg-elevated) !important;
+  color: var(--evev-text-main) !important;
+  border: 1px solid var(--evev-border) !important;
+}
+
+[data-theme="dark"] .pricing-one .tab-buttons .tab-btn span,
+[data-theme="dark"] .pricing-one .tab-buttons .tab-btn i {
+  color: var(--evev-text-main) !important;
+}
+
+[data-theme="dark"] .pricing-one .tab-buttons .tab-btn.active-btn,
+[data-theme="dark"] .technologies-one .tab-buttons .tab-btn.active-btn {
+  background-color: #991b1b !important;
+  border-color: #991b1b !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .pricing-one .tab-buttons .tab-btn.active-btn span,
+[data-theme="dark"] .pricing-one .tab-buttons .tab-btn.active-btn i {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .main-header__search,
+[data-theme="dark"] .main-header__cart {
+  color: var(--evev-text-main) !important;
+}
+
+[data-theme="dark"] .mobile-nav__btn span {
+  background-color: var(--evev-text-main) !important;
+}
+
+/* Hero Overlay Protection (Always Readable White on Dark Scrim) */
+.hero-slider-one__bg::after,
+.hero-slider-two__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(7, 10, 14, 0.82) 0%, rgba(7, 10, 14, 0.56) 55%, rgba(7, 10, 14, 0.35) 100%);
+  pointer-events: none;
+}
+
+.hero-slider-one__title,
+.hero-slider-one__sub-title,
+.hero-slider-two__title,
+.hero-slider-two__sub-title {
+  color: #ffffff !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* =====================================================================
+   THEME TOGGLE BUTTON (ACCESSIBLE & SMOOTH)
+   ===================================================================== */
 .theme-toggle-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 2px solid #cbd5e1;
   background-color: #ffffff;
-  color: #1e293b;
+  color: #0f172a;
   cursor: pointer;
-  transition: all 0.25s ease;
-  font-size: 18px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  font-size: 17px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover,
+.theme-toggle-btn:focus-visible {
+  transform: scale(1.08);
+  outline: 2px solid #991b1b;
+  outline-offset: 2px;
 }
 
 [data-theme="dark"] .theme-toggle-btn {
   background-color: #1e293b;
-  border-color: #334155;
-  color: #38bdf8;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  border-color: #475569;
+  color: #fcd34d;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
 }
 
-.theme-toggle-btn:hover {
-  transform: scale(1.08);
+[data-theme="dark"] .theme-toggle-btn:hover,
+[data-theme="dark"] .theme-toggle-btn:focus-visible {
+  outline-color: #fcd34d;
 }
 
 /* =====================================================================
-   SOLID HIGH-CONTRAST FOOTER (#070A0E) - ANTI BURAM
+   SOLID HIGH-CONTRAST FOOTER (#070A0E) — CONTRAST > 11:1
    ===================================================================== */
 footer,
 .main-footer,
-.footer-bottom,
+.main-footer__bottom,
 [data-theme="light"] .main-footer,
-[data-theme="light"] .footer-bottom,
+[data-theme="light"] .main-footer__bottom,
 [data-theme="dark"] .main-footer,
-[data-theme="dark"] .footer-bottom {
-  background-color: #070A0E !important;
-  color: #CBD5E1 !important;
-  border-top: 1px solid #1E293B !important;
+[data-theme="dark"] .main-footer__bottom {
+  background-color: #070a0e !important;
+  color: #f1f5f9 !important;
+  border-top: 1px solid #1e293b !important;
 }
 
-.main-footer h1, .main-footer h2, .main-footer h3, 
-.main-footer h4, .main-footer h5, .main-footer h6,
-.main-footer .footer-title, .main-footer .widget-title {
-  color: #FFFFFF !important;
+.main-footer h1,
+.main-footer h2,
+.main-footer h3,
+.main-footer h4,
+.main-footer h5,
+.main-footer h6,
+.main-footer .footer-widget__title {
+  color: #ffffff !important;
   font-weight: 700 !important;
 }
 
-.main-footer p, .main-footer span, .main-footer li, 
-.main-footer .text, .footer-bottom p {
-  color: #F1F5F9 !important;
+.main-footer p,
+.main-footer span,
+.main-footer li,
+.main-footer address,
+.main-footer .main-footer__copyright {
+  color: #f1f5f9 !important;
   opacity: 1 !important;
 }
 
 .main-footer a {
-  color: #94A3B8 !important;
+  color: #7dd3fc !important;
   transition: color 0.2s ease;
 }
 
 .main-footer a:hover {
-  color: #38BDF8 !important;
+  color: #ffffff !important;
+}
+
+.main-footer .boskery-btn,
+.main-footer .boskery-btn span {
+  color: #ffffff !important;
 }
 
 /* =====================================================================
-   PHOTO UTILITIES & MODERN UI BADGES
+   SYMMETRICAL PRICING & PACKAGE CARDS (100% READABLE, ZERO CLIPPING)
    ===================================================================== */
-.service-photo {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
+.evev-price-card {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 20px !important;
+  height: 100% !important;
+  overflow: visible !important;
   border-radius: 12px;
-  display: block;
-  transition: transform 0.4s ease;
+  border: 1px solid var(--evev-border);
+  background-color: var(--evev-bg-card);
+  box-shadow: var(--evev-shadow);
 }
 
-.portfolio-photo {
+.evev-price-card .pricing-card__left {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+.evev-price-card .pricing-card__image {
+  flex-shrink: 0;
+  width: 82px;
+  height: 82px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.evev-price-card .pricing-card__image img {
   width: 100%;
-  height: 270px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px;
   display: block;
-  transition: transform 0.4s ease;
 }
 
-.service-photo:hover, .portfolio-photo:hover {
-  transform: scale(1.03);
+.evev-price-card .pricing-card__name {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
-.icon-badge-3d {
-  width: 58px;
-  height: 58px;
+.evev-price-card .pricing-card__title {
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+  margin-bottom: 4px !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  word-break: break-word;
+}
+
+.evev-price-card .pricing-card__package {
+  display: block;
+  font-size: 13.5px !important;
+  line-height: 1.45 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  margin-bottom: 6px;
+}
+
+.evev-price-card .pricing-card__right {
+  flex-shrink: 0;
+  text-align: right;
+  min-width: 118px;
+  margin-left: auto;
+}
+
+.evev-price-card .pricing-card__weight {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+
+.evev-price-card .pricing-card__price {
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  color: var(--evev-accent) !important;
+  white-space: nowrap;
+  line-height: 1.25;
+}
+
+.evev-mini-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--evev-wa-text) !important;
+  text-decoration: none;
+}
+
+.evev-mini-wa:hover {
+  text-decoration: underline;
+}
+
+/* Symmetrical Bundling / Grosir Package Section */
+.evev-paket-section {
+  padding: 84px 0;
+  background-color: var(--evev-bg-secondary);
+}
+
+.evev-paket-card {
+  background: var(--evev-bg-card);
+  border: 1px solid var(--evev-border);
   border-radius: 16px;
+  padding: 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--evev-shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.28s ease;
+}
+
+.evev-paket-card:hover {
+  transform: translateY(-4px);
+}
+
+.evev-paket-card__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.evev-paket-card__badge {
+  background: #991b1b;
+  color: #ffffff !important;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 4px 11px;
+  border-radius: 999px;
+}
+
+.evev-paket-card__pack {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--evev-text-muted);
+}
+
+.evev-paket-card__title {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--evev-text-main);
+  margin-bottom: 10px;
+}
+
+.evev-paket-card__desc {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--evev-text-muted);
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.evev-paket-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--evev-border);
+}
+
+.evev-paket-card__price-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--evev-text-muted);
+}
+
+.evev-paket-card__price {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--evev-accent);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.evev-paket-card__btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s ease;
-}
-
-.icon-badge-3d:hover {
-  transform: translateY(-4px) scale(1.08);
-}
-
-.badge-pill {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
+  gap: 8px;
+  background: var(--evev-wa-bg);
+  color: #ffffff !important;
+  font-size: 13.5px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  padding: 10px 18px;
+  border-radius: 50px;
+  text-decoration: none;
+  white-space: nowrap;
+  min-height: 44px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.badge-pill-primary {
-  background-color: #0284c7;
-  color: #ffffff;
+.evev-paket-card__btn:hover {
+  background: var(--evev-wa-bg-hover);
+  color: #ffffff !important;
+  transform: translateY(-2px);
 }
 
-.badge-pill-accent {
-  background-color: #e11d48;
-  color: #ffffff;
-}
-
-/* Floating WhatsApp Button */
-.floating-wa-btn, .wa-floating, .wa-float-pill, .wa-floating-pill {
+/* =====================================================================
+   FLOATING WHATSAPP BUTTON — WCAG AAA CONTRAST (#FFFFFF ON #166534 = 7.13:1)
+   ===================================================================== */
+.floating-wa-btn,
+.wa-floating,
+.wa-float-pill,
+.wa-floating-pill {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
+  bottom: 26px;
+  right: 24px;
   z-index: 99999;
-  background-color: #25d366;
+  background-color: var(--evev-wa-bg) !important;
   color: #ffffff !important;
   font-family: inherit;
   font-size: 14px;
@@ -207,19 +616,106 @@ footer,
   align-items: center;
   gap: 10px;
   padding: 12px 22px;
+  min-height: 48px;
   border-radius: 50px;
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 24px rgba(22, 101, 52, 0.45);
+  text-decoration: none !important;
+  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.floating-wa-btn:hover, .wa-floating:hover, .wa-float-pill:hover, .wa-floating-pill:hover {
-  background-color: #1eb857;
+.floating-wa-btn:hover,
+.wa-floating:hover,
+.wa-float-pill:hover,
+.wa-floating-pill:hover {
+  background-color: var(--evev-wa-bg-hover) !important;
   color: #ffffff !important;
-  transform: translateY(-4px) scale(1.04);
-  box-shadow: 0 12px 28px rgba(37, 211, 102, 0.6);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(20, 83, 45, 0.6);
 }
 
-.floating-wa-btn i, .wa-floating i, .wa-float-pill i, .wa-floating-pill i {
+.floating-wa-btn i,
+.floating-wa-btn span {
+  color: #ffffff !important;
+}
+
+.floating-wa-btn i {
   font-size: 20px;
+}
+
+/* Mobile Layout Guard (360px - 575px) */
+@media only screen and (max-width: 575px) {
+  .evev-price-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px !important;
+  }
+  .evev-price-card .pricing-card__right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    width: 100%;
+    padding-top: 10px;
+    border-top: 1px dashed var(--evev-border);
+  }
+  .floating-wa-btn {
+    bottom: 18px !important;
+    right: 16px !important;
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+  }
+}
+
+
+/* =====================================================================
+   TEMPLATE 3 (HORECA & RESTO) DARK & LIGHT MODE CONTRAST POLISH
+   ===================================================================== */
+[data-theme="dark"] .hero-slider-three,
+[data-theme="dark"] .why-choose-two,
+[data-theme="dark"] .why-choose-three {
+  background-color: var(--evev-bg-primary) !important;
+  color: var(--evev-text-main) !important;
+}
+
+[data-theme="dark"] .why-choose-card__content,
+[data-theme="dark"] .why-choose-three__card,
+[data-theme="dark"] .testimonials-three__card__inner,
+[data-theme="dark"] .testimonials-three__card__identity,
+[data-theme="dark"] .about-three__info__inner {
+  background-color: var(--evev-bg-card) !important;
+  color: var(--evev-text-main) !important;
+  border-color: var(--evev-border) !important;
+}
+
+[data-theme="dark"] .why-choose-card__content__bg,
+[data-theme="dark"] .testimonials-three__card__bg,
+[data-theme="dark"] .testimonials-three__card__identity__bg {
+  opacity: 0.08 !important;
+}
+
+[data-theme="dark"] .hero-slider-three__title,
+[data-theme="dark"] .hero-slider-three__sub-title,
+[data-theme="dark"] .about-three__info__title,
+[data-theme="dark"] .about-three__profile__name,
+[data-theme="dark"] .progress-box__title,
+[data-theme="dark"] .why-choose-card__content__title,
+[data-theme="dark"] .why-choose-three__card__title,
+[data-theme="dark"] .testimonials-three__card__name {
+  color: var(--evev-text-main) !important;
+}
+
+[data-theme="dark"] .hero-slider-three__text,
+[data-theme="dark"] .delivery-one__text,
+[data-theme="dark"] .why-choose-card__content__text,
+[data-theme="dark"] .why-choose-three__text,
+[data-theme="dark"] .testimonials-three__card__text,
+[data-theme="dark"] .testimonials-three__card__designation,
+[data-theme="dark"] .blog-three__text,
+[data-theme="dark"] .about-three__profile__designation {
+  color: var(--evev-text-muted) !important;
+}
+
+[data-theme="dark"] .main-header--three .main-header__inner {
+  background-color: #162032 !important;
+  border: 1px solid #334155;
 }
